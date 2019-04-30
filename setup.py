@@ -12,4 +12,7 @@ setup(
     description='Lambda function to provide collection notifications',
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
+    entry_points={
+        'console_scripts': ['collection-day-lambda=cdl.__main__:main'],
+    }
 )
