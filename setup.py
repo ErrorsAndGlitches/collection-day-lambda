@@ -9,5 +9,7 @@ setup(
     license='MIT License',
     author='ErrorsAndGlitches',
     author_email='',
-    description='Lambda function to provide collection notifications'
+    description='Lambda function to provide collection notifications',
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
 )
