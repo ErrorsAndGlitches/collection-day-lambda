@@ -1,0 +1,67 @@
+[
+  {
+    "id": 0,
+    "title": "<img src=/UTIL/WARP/images/GarbageIcon32.gif width=30px height=35px /><img src=/UTIL/WARP/images/FYIcon32.gif width=30px height=35px />",
+    "start": "Thu, 02 May 2019",
+    "end": null,
+    "url": null,
+    "allDay": true,
+    "delimitedData": null,
+    "status": null,
+    "Garbage": true,
+    "Recycling": false,
+    "FoodAndYardWaste": true
+  },
+  {
+    "id": 0,
+    "title": "<img src=/UTIL/WARP/images/GarbageIcon32.gif width=30px height=35px /><img src=/UTIL/WARP/images/RecycleIcon32.gif width=30px height=35px /><img src=/UTIL/WARP/images/FYIcon32.gif width=30px height=35px />",
+    "start": "Thu, 09 May 2019",
+    "end": null,
+    "url": null,
+    "allDay": true,
+    "delimitedData": null,
+    "status": null,
+    "Garbage": true,
+    "Recycling": true,
+    "FoodAndYardWaste": true
+  },
+  {
+    "id": 0,
+    "title": "<img src=/UTIL/WARP/images/GarbageIcon32.gif width=30px height=35px /><img src=/UTIL/WARP/images/FYIcon32.gif width=30px height=35px />",
+    "start": "Thu, 16 May 2019",
+    "end": null,
+    "url": null,
+    "allDay": true,
+    "delimitedData": null,
+    "status": null,
+    "Garbage": true,
+    "Recycling": false,
+    "FoodAndYardWaste": true
+  },
+  {
+    "id": 0,
+    "title": "<img src=/UTIL/WARP/images/GarbageIcon32.gif width=30px height=35px /><img src=/UTIL/WARP/images/RecycleIcon32.gif width=30px height=35px /><img src=/UTIL/WARP/images/FYIcon32.gif width=30px height=35px />",
+    "start": "Thu, 23 May 2019",
+    "end": null,
+    "url": null,
+    "allDay": true,
+    "delimitedData": null,
+    "status": null,
+    "Garbage": true,
+    "Recycling": true,
+    "FoodAndYardWaste": true
+  },
+  {
+    "id": 0,
+    "title": "<img src=/UTIL/WARP/images/GarbageIcon32.gif width=30px height=35px /><img src=/UTIL/WARP/images/FYIcon32.gif width=30px height=35px />",
+    "start": "Thu, 30 May 2019",
+    "end": null,
+    "url": null,
+    "allDay": true,
+    "delimitedData": null,
+    "status": null,
+    "Garbage": true,
+    "Recycling": false,
+    "FoodAndYardWaste": true
+  }
+]
