@@ -15,13 +15,21 @@ mechanism.
 
 One can run the tool from the command line for testing by running:
 ```bash
-python -m cdl
+python -m cdl [options...]
 ```
 
 
 ## Set Up
 
-> todo
+Environment variables that must be defined in the Lambda context:
+
+* **ADDRESS**: address to look up the collection for. Only needs to be the street address i.e. no city or zip code.
+* **PHONE_NUMBERS**: comma separated list of phone numbers to send the messages to. Must have the form "+10123456789"
+
+The Lambda needs permissions to hit SNS to send the SMS messages. The role the Lambda runs under must have these
+permissions.
+
+[List of tz database time zones Wiki]: https://www.wikiwand.com/en/List_of_tz_database_time_zones
 
 
 ## Design Overview
