@@ -11,6 +11,13 @@ mechanism.
 [King County Collection Day Tool]: https://www.seattle.gov/utilities/services/garbage/look-up-collection-day
 
 
+## Running Tests
+
+```
+python -m unittest
+```
+
+
 ## Running Locally
 
 One can run the tool from the command line for testing by running:

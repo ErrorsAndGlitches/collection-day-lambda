@@ -1,4 +1,4 @@
-from continuumio/miniconda3:4.5.12
+from continuumio/miniconda3:4.8.2
 
 ENV project_name collection-day-lambda
 
@@ -8,12 +8,12 @@ RUN apt-get update --fix-missing && \
 
 COPY environment-docker.yml .
 RUN conda env create -f environment-docker.yml
-RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc
 
 # Copy workspace
 WORKDIR /opt/${project_name}/
 
 COPY cdl cdl
+COPY sbp sbp
 COPY tests tests
 COPY setup.py setup.cfg /opt/${project_name}/
 
@@ -26,4 +26,4 @@ ENV zip_output_file /opt/lambda-archive-collection-day-lambda.zip
 RUN cd /opt/conda/envs/${project_name}/lib/python3.7/site-packages/ && \
   zip -r ${zip_output_file} . -x '*__pycache__*' && \
   cd /opt/${project_name}/ && \
-  zip -gr ${zip_output_file} cdl -x '*__pycache__*'
+  zip -gr ${zip_output_file} cdl sbp -x '*__pycache__*'
