@@ -4,7 +4,7 @@ import json
 
 from bs4 import BeautifulSoup
 
-SPACES_REGEX = re.compile('(\d)+\s+space')
+SPACES_REGEX = re.compile('(\d+)\s+space')
 
 
 class OpeningsFilter(object):
@@ -65,6 +65,8 @@ class SbpResponse(object):
 
         if 'Full' in text:
             return 0
+        if 'Available' in text:
+            return 15  # it's about this number. It's not clear what the actual value is.
 
         return int(SPACES_REGEX.match(text).group(1))
 

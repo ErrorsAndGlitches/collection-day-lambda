@@ -9,12 +9,22 @@ from sbp.sbp_response import TimeEntry
 
 
 class TestSbpRequest(TestCase):
+    def test_sbp_request_unknown_type(self):
+        with self.assertRaises(Exception):
+            self._run_request_test('sauna')
+
+    def test_sbp_request_climbing_guid(self):
+        self._run_request_test('climbing')
+
     def test_sbp_request(self):
+        self._run_request_test('fitness')
+
+    def _run_request_test(self, reservation_type):
         with HTTMock(self._sbp_reservations_mock):
             # default value of strftime is 1900-01-01T00:00:00.000
             # https://docs.python.org/3/library/datetime.html#technical-detail
             self.assertEqual(
-                SbpRequest('2020-11-03').response().time_entries(),
+                SbpRequest('2020-11-03', reservation_type).response().time_entries(),
                 [
                     TimeEntry(self._time(7), self._time(8), 0),
                     TimeEntry(self._time(7, 5), self._time(8, 30), 0),

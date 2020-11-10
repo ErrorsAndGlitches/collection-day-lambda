@@ -17,6 +17,8 @@ def args():
     parser.add_argument('--to-email', required=True, help='Address of email recipient.')
 
     # optional
+    parser.add_argument('--reservation-type', required=False, default='fitness',
+                        help='Reservation type. "climbing" or "fitness". Default: "fitness"')
     parser.add_argument('--aws-profile', required=False, help='AWS profile to use for credentials')
     parser.add_argument(
         '--aws-region', required=False, default=DEFAULT_AWS_REGION,
@@ -36,6 +38,7 @@ def main():
         cli_args.end_time,
         cli_args.from_email,
         cli_args.to_email,
+        cli_args.reservation_type,
         boto3.client('ses')
     )
 
