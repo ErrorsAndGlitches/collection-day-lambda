@@ -6,6 +6,7 @@ from httmock import HTTMock, urlmatch
 
 from sbp.sbp_request import SbpRequest
 from sbp.sbp_response import TimeEntry
+from sbp.reservation_type import _FITNESS, _CLIMBING
 
 
 class TestSbpRequest(TestCase):
@@ -14,10 +15,10 @@ class TestSbpRequest(TestCase):
             self._run_request_test('sauna')
 
     def test_sbp_request_climbing_guid(self):
-        self._run_request_test('climbing')
+        self._run_request_test(_CLIMBING)
 
     def test_sbp_request(self):
-        self._run_request_test('fitness')
+        self._run_request_test(_FITNESS)
 
     def _run_request_test(self, reservation_type):
         with HTTMock(self._sbp_reservations_mock):

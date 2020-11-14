@@ -4,6 +4,7 @@ from datetime import datetime
 
 from sbp.sbp_email import SbpEmail
 from sbp.sbp_response import TimeEntry
+from sbp.reservation_type import _FITNESS
 
 
 class TestSbpEmail(TestCase):
@@ -13,6 +14,7 @@ class TestSbpEmail(TestCase):
             [TimeEntry(datetime(2020, 11, 5, 7, 30), datetime(2020, 11, 5, 9, 0), 2)],
             'from-email@gmail.com',
             'to-email@gmail.com',
+            _FITNESS,
             ses_mock
         ).send()
 
@@ -29,7 +31,7 @@ class TestSbpEmail(TestCase):
                 },
                 'Body': {
                     'Html': {
-                        'Data': '<a href="https://seattleboulderingproject.com/reserve-fitness">reserve fitness page</a><br/><br/><ol><li>[07:30 - 09:00]: 2</li></ol>'
+                        'Data': '<a href="https://seattleboulderingproject.com/reserve-fitness">reservation page for fitness</a><br/><br/><ol><li>[07:30 - 09:00]: 2</li></ol>'
                     }
                 }
             },

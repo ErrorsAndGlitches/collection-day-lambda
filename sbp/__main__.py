@@ -13,10 +13,10 @@ def args():
     parser.add_argument('--date', required=True, help='Date of reservation in YYYY-MM-DD format.')
     parser.add_argument('--start-time', required=True, help='Start time in HH:MM format to search for. Inclusive.')
     parser.add_argument('--end-time', required=True, help='End time in HH:MM format to search for. Inclusive.')
-    parser.add_argument('--from-email', required=True, help='Address of email sender.')
-    parser.add_argument('--to-email', required=True, help='Address of email recipient.')
 
     # optional
+    parser.add_argument('--from-email', required=False, help='Address of email sender.')
+    parser.add_argument('--to-email', required=False, help='Address of email recipient.')
     parser.add_argument('--reservation-type', required=False, default='fitness',
                         help='Reservation type. "climbing" or "fitness". Default: "fitness"')
     parser.add_argument('--aws-profile', required=False, help='AWS profile to use for credentials')

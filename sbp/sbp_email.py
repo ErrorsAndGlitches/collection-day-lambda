@@ -1,11 +1,9 @@
-_RESERVATION_URL = "https://seattleboulderingproject.com/reserve-fitness"
-
-
 class SbpEmail(object):
-    def __init__(self, entries, from_email, to_email, ses):
+    def __init__(self, entries, from_email, to_email, reservation_type, ses):
         self._entries = entries
         self._from_email = from_email
         self._to_email = to_email
+        self._reservation_type = reservation_type
         self._ses = ses
 
     def send(self):
@@ -32,7 +30,7 @@ class SbpEmail(object):
         entries_body = ["<li>{}</li>".format(entry) for entry in self._entries]
 
         html = [
-            "<a href=\"{}\">reserve fitness page</a>".format(_RESERVATION_URL),
+            "<a href=\"{}\">reservation page for {}</a>".format(self._reservation_type.url, self._reservation_type.name),
             "<br/>",
             "<br/>",
             "<ol>",
