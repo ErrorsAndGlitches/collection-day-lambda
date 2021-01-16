@@ -1,29 +1,22 @@
-import boto3
-from os import environ
 from datetime import datetime
 from pytz import timezone
+from os import environ
+import boto3
 
 from cdl.collection_calendar import CollectionCalendar
+from cdl.notifications import SnsNotification
 
 
 def collection_day_lambda_handler(event, context):
     send_collection_day_notification(
-        boto3.client('sns'),
-        environ['ADDRESS'],
-        environ['PHONE_NUMBERS'].split(',')
+        SnsNotification(boto3.client('sns'), environ['PHONE_NUMBERS'].split(',')),
+        environ['ADDRESS']
     )
-
     return {
         'result': 'success'
     }
 
 
-def send_collection_day_notification(sns_client, address, phone_numbers):
+def send_collection_day_notification(notifications, address):
     today_date = datetime.now(tz=timezone('America/Los_Angeles')).date()
-    msg = str(CollectionCalendar(address, today_date).next_collection())
-
-    for phone_number in phone_numbers:
-        sns_client.publish(
-            PhoneNumber=phone_number,
-            Message=msg
-        )
+    notifications.send(str(CollectionCalendar(address, today_date).next_collection_msg()))

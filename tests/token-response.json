@@ -1,0 +1,14 @@
+{
+  "access_token": "ACCESS_TOKEN",
+  "token_type": "bearer",
+  "refresh_token": "REFRESH_TOKEN",
+  "expires_in": 3599,
+  "scope": "read write",
+  "user": {
+    "customerId": "guest",
+    "accounts": [],
+    "socialInd": false,
+    "invalidLoginCount": 0
+  },
+  "jti": "988d73dc-635f-42f5-a178-f75a4be0d195"
+}

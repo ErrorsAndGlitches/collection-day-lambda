@@ -1,4 +1,4 @@
-from continuumio/miniconda3:4.8.2
+from continuumio/miniconda3:4.9.2
 
 ENV project_name collection-day-lambda
 

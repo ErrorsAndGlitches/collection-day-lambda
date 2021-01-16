@@ -40,7 +40,7 @@ class TestFilters(TestCase):
 
     def test_sbp_response_available_type_opening(self):
         with open('tests/sbp/sbp-climbing-response-with-available-type.json') as f:
-            self.assertEquals(
+            self.assertEqual(
                 SbpResponse(''.join(f.readlines())).time_entries(),
                 [
                     TimeEntry(self._time(7), self._time(8), 0),

@@ -1,0 +1,34 @@
+{
+  "status": "Ok",
+  "statusCode": "200",
+  "validations": [],
+  "requestTransactionId": "7519b764-1121-41d1-b651-531a75cb2236",
+  "address": [
+    {
+      "addressLine1": "STREET ADDRESS",
+      "addressLine2": null,
+      "addressLine3": null,
+      "city": "CITY",
+      "state": "STATE",
+      "zip": "NINE-DIGIT-ZIP-CODE",
+      "country": null,
+      "addressType": null,
+      "premCode": "PREM_CODE",
+      "streetNumber": null,
+      "streetName": null,
+      "suffixCode": null,
+      "unitNumber": null,
+      "preDirection": null,
+      "postDirection": null,
+      "unitTypeCode": null,
+      "fullAddress": null,
+      "startDate": null,
+      "endDate": null,
+      "id": null,
+      "action": null,
+      "addressLine4": null,
+      "garbageInactiveInd": false,
+      "premiseType": "SF"
+    }
+  ]
+}

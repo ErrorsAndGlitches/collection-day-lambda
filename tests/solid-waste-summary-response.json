@@ -1,0 +1,179 @@
+{
+  "status": "Ok",
+  "statusCode": "200",
+  "validations": [],
+  "accountContext": {
+    "accountHolder": null,
+    "accountNumber": "ACCOUNT_NUMBER",
+    "personId": "PERSON_ID",
+    "userID": null,
+    "serviceAddress": "STREET ADDRESS, CITY, STATE, NINE_DIGIT_ZIP_CODE",
+    "serviceType": null,
+    "serviceNumber": null,
+    "uom": null,
+    "serviceId": null,
+    "serviceAddressLine1": null,
+    "serviceAddressLine2": null,
+    "serviceCity": null,
+    "serviceZipCode": null,
+    "serviceState": null,
+    "firstName": null,
+    "lastName": null,
+    "premiseId": null,
+    "summaryInd": false,
+    "access": null,
+    "accessLevel": null,
+    "billCycleCode": null,
+    "companyCd": "SPU"
+  },
+  "requestTransactionId": "58b2e7e0-f8b3-4ab9-93db-469725dd4792",
+  "accountSummaryType": {
+    "accountNumber": "ACCOUNT_NUMBER",
+    "serviceAddress": "STREET ADDRESS, CITY, STATE, NINE_DIGIT_ZIP_CODE",
+    "firstName": null,
+    "lastName": null,
+    "fullName": null,
+    "accountStatus": null,
+    "defaultAccountInd": null,
+    "highbillThreshold": null,
+    "registerNumber": null,
+    "access": null,
+    "accountBalance": null,
+    "personId": "PERSON_ID",
+    "accessLevel": null,
+    "serviceType": null,
+    "autoPayInd": null,
+    "paperlessBillInd": null,
+    "budgetBillInd": null,
+    "budgetBillEligibleInd": null,
+    "companyCd": "SPU",
+    "budgetStartDate": null,
+    "budgetAmount": null,
+    "currentBillDate": null,
+    "lastPaymentAmount": null,
+    "lastPaymentDate": null,
+    "totalPaymentAmount": null,
+    "totalAmountDue": null,
+    "currentAmountDue": null,
+    "paymentDueDate": null,
+    "lastPaymentAmountReceivedDate": null,
+    "pastDueAmount": null,
+    "paymentAlert": null,
+    "profileInd": null,
+    "payoffBalance": null,
+    "autoPayEligibility": false,
+    "paymentDueDateRaw": null,
+    "pickupDay": "Thu",
+    "pickupDate": "21",
+    "pickupMonth": "January",
+    "cisCompanyCode": null,
+    "pendingAlerts": [],
+    "garbageCount": 1,
+    "foodCount": 1,
+    "dumpsterCount": 0,
+    "recycleCount": 1,
+    "sha": false,
+    "alerts": [],
+    "alert": [],
+    "services": [],
+    "sortColumn": null,
+    "sortOrder": null,
+    "notificationType": null,
+    "activePayPlan": false,
+    "pledgeAmount": null,
+    "paymentPlans": null,
+    "swServices": [
+      {
+        "serviceId": null,
+        "premiseId": null,
+        "premiseType": "SF",
+        "condition": "1SPS",
+        "binCount": 3,
+        "services": [
+          {
+            "servicePointId": "3bQKqgPmO00iNyQYQB1eSw==",
+            "lastPickupDate": null,
+            "type": "GRESS",
+            "description": "Garbage",
+            "premiseType": "SF",
+            "subType": "G",
+            "bins": [
+              {
+                "type": "Gallon",
+                "itemType": "GC20GAL",
+                "size": "20",
+                "count": "1",
+                "binClass": "C"
+              }
+            ],
+            "schedule": {
+              "frequency": "1",
+              "mon": null,
+              "tue": null,
+              "wed": null,
+              "thu": "1",
+              "fri": null,
+              "sat": null,
+              "sun": null
+            }
+          },
+          {
+            "servicePointId": "ItjML9wfL2Q1/T5pQ4Wr9w==",
+            "lastPickupDate": null,
+            "type": "RYRESS",
+            "description": "Recycle",
+            "premiseType": "SF",
+            "subType": "R",
+            "bins": [
+              {
+                "type": "Gallon",
+                "itemType": "RC90GAL",
+                "size": "90",
+                "count": "1",
+                "binClass": "C"
+              }
+            ],
+            "schedule": {
+              "frequency": "0.5",
+              "mon": null,
+              "tue": null,
+              "wed": null,
+              "thu": "1",
+              "fri": null,
+              "sat": null,
+              "sun": null
+            }
+          },
+          {
+            "servicePointId": "8IyKDqqIxEczlp9ukS6lQg==",
+            "lastPickupDate": null,
+            "type": "YWRESS",
+            "description": "Food/Yard Waste",
+            "premiseType": "SF",
+            "subType": "F",
+            "bins": [
+              {
+                "type": "Gallon",
+                "itemType": "YC90GAL",
+                "size": "90",
+                "count": "1",
+                "binClass": "C"
+              }
+            ],
+            "schedule": {
+              "frequency": "1",
+              "mon": null,
+              "tue": null,
+              "wed": null,
+              "thu": "1",
+              "fri": null,
+              "sat": null,
+              "sun": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "accountGroups": []
+}

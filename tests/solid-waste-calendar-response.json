@@ -1,0 +1,46 @@
+{
+  "status": "Ok",
+  "statusCode": "200",
+  "validations": [],
+  "requestTransactionId": "0fbf1317-dfa9-4e67-b987-867b4742da17",
+  "calendar": {
+    "ItjML9wfL2Q1/T5pQ4Wr9w==_LP": [
+      "01/14/2021"
+    ],
+    "8IyKDqqIxEczlp9ukS6lQg==_NP": [
+      "01/21/2021"
+    ],
+    "ItjML9wfL2Q1/T5pQ4Wr9w==_NP": [
+      "01/28/2021"
+    ],
+    "8IyKDqqIxEczlp9ukS6lQg==_LP": [
+      "01/14/2021"
+    ],
+    "8IyKDqqIxEczlp9ukS6lQg==": [
+      "12/31/2020",
+      "01/07/2021",
+      "01/14/2021",
+      "01/21/2021",
+      "01/28/2021"
+    ],
+    "3bQKqgPmO00iNyQYQB1eSw==_NP": [
+      "01/21/2021"
+    ],
+    "3bQKqgPmO00iNyQYQB1eSw==_LP": [
+      "01/14/2021"
+    ],
+    "ItjML9wfL2Q1/T5pQ4Wr9w==": [
+      "12/31/2020",
+      "01/14/2021",
+      "01/28/2021"
+    ],
+    "3bQKqgPmO00iNyQYQB1eSw==": [
+      "12/31/2020",
+      "01/07/2021",
+      "01/14/2021",
+      "01/21/2021",
+      "01/28/2021"
+    ]
+  },
+  "dataMap": {}
+}
