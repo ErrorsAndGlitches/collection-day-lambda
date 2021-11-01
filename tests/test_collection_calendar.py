@@ -46,7 +46,7 @@ class TestToken(TestCase):
             })
 
     @staticmethod
-    @urlmatch(scheme='https', netloc='myutilities.seattle.gov', path='/rest/oauth/token')
+    @urlmatch(scheme='https', netloc='myutilities.seattle.gov', path='/rest/auth/guest')
     def _token_mock(url, request):
         with open('tests/token-response.json') as file:
             return json.dumps(json.load(file))
@@ -64,7 +64,7 @@ class TestSolidWasteSummary(TestCase):
             ])
 
     @staticmethod
-    @urlmatch(scheme='https', netloc='myutilities.seattle.gov', path='/rest/account/swsummary')
+    @urlmatch(scheme='https', netloc='myutilities.seattle.gov', path='/rest/guest/swsummary')
     def _summary_mock(url, request):
         with open('tests/solid-waste-summary-response.json') as file:
             return json.dumps(json.load(file))
@@ -170,8 +170,8 @@ class TestCollectionCalendar(TestCase):
     _PATH_TO_FILE_MAP = {
         '/rest/serviceorder/findaddress': 'tests/find-address-response.json',
         '/rest/serviceorder/findAccount': 'tests/find-account-response.json',
-        '/rest/oauth/token': 'tests/token-response.json',
-        '/rest/account/swsummary': 'tests/solid-waste-summary-response.json',
+        '/rest/auth/guest': 'tests/token-response.json',
+        '/rest/guest/swsummary': 'tests/solid-waste-summary-response.json',
         '/rest/solidwastecalendar': 'tests/solid-waste-calendar-response.json'
     }
 

@@ -115,17 +115,10 @@ class _FindAccountResponse(object):
 
 
 class _TokenRequest(object):
-    _END_POINT = 'https://myutilities.seattle.gov/rest/oauth/token'
+    _END_POINT = 'https://myutilities.seattle.gov/rest/auth/guest'
 
     def response(self):
-        resp = requests.post(
-            self._END_POINT,
-            data='grant_type=password&username=guest&password=guest',
-            headers={
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic d2ViQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ='
-            }
-        )
+        resp = requests.post(self._END_POINT)
         _check_status_code(resp, self)
         return _TokenResponse(resp.json())
 
@@ -150,7 +143,7 @@ class _TokenResponse(object):
 
 
 class _SolidWasteSummaryRequest(object):
-    _END_POINT = 'https://myutilities.seattle.gov/rest/account/swsummary'
+    _END_POINT = 'https://myutilities.seattle.gov/rest/guest/swsummary'
 
     def __init__(self, authorization_header, account_number):
         self._authorization_header = authorization_header
