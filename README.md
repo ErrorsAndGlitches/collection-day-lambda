@@ -65,8 +65,8 @@ aws lambda update-function-configuration \
   --function-name 'collection-day-lambda' \
   --handler cdl.cdl.collection_day_lambda_handler \
   --environment Variables='{ADDRESS=987 Made Up Address St,PHONE_NUMBERS="+12223334444,+15556667777"}' \
-  --runtime 'python3.7' \
-  --timeout 1
+  --runtime 'python3.11' \
+  --timeout 60
 # upload the build Lambda tarball
 aws lambda update-function-code \
   --function-name 'collection-day-lambda' \

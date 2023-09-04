@@ -1,4 +1,4 @@
-from continuumio/miniconda3:4.10.3
+from continuumio/miniconda3:23.5.2-0
 
 ENV project_name collection-day-lambda
 
@@ -23,7 +23,7 @@ RUN /bin/bash -c "source activate ${project_name} && python setup.py test"
 # Create the AWS Lambda archive
 ENV zip_output_file /opt/lambda-archive-collection-day-lambda.zip
 
-RUN cd /opt/conda/envs/${project_name}/lib/python3.7/site-packages/ && \
+RUN cd /opt/conda/envs/${project_name}/lib/python3.11/site-packages/ && \
   zip -r ${zip_output_file} . -x '*__pycache__*' && \
   cd /opt/${project_name}/ && \
   zip -gr ${zip_output_file} cdl sbp -x '*__pycache__*'
