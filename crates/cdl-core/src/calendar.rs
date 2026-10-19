@@ -35,8 +35,7 @@ impl ServiceCalendar {
     }
 }
 
-/// Builds the next-pickup message across all services, matching the format
-/// produced by the original Python implementation, e.g.
+/// Builds the next-pickup message across all services, e.g.
 /// `Next pick up will be on Thu 14 Jan 2021 and will include [Garbage,Recycle]`.
 pub fn next_collection_msg(
     calendars: &[ServiceCalendar],

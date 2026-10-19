@@ -1,11 +1,8 @@
 use crate::error::CalendarError;
 use async_trait::async_trait;
 
-/// A sink for the formatted collection message.
-///
-/// Mirrors the two Python notification classes: one prints locally, the other
-/// sends SMS via SNS. The trait lets the CLI and Lambda handler share a single
-/// send path.
+/// A sink for the formatted collection message. Lets the CLI and Lambda
+/// handler share a single send path regardless of destination.
 #[async_trait]
 pub trait Notification {
     async fn send(&self, msg: &str) -> Result<(), CalendarError>;

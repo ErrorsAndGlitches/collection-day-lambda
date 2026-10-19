@@ -1,7 +1,5 @@
-//! Local command-line entrypoint, mirroring the original Python `__main__`.
-//!
-//! Lets the tool be run from a developer machine, either printing the message
-//! (`--print`) or sending it via SNS using a named AWS profile/region.
+//! Local command-line entrypoint: prints the message (`--print`) or sends it
+//! via SNS using a named AWS profile/region.
 
 use crate::run_notification;
 use cdl_core::{SnsNotification, StdoutNotification};

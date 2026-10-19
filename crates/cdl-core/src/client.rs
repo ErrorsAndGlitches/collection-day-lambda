@@ -8,9 +8,8 @@ const DATE_FORMAT: &str = "%m/%d/%Y";
 
 /// Client for the Seattle (myutilities) solid-waste calendar API.
 ///
-/// Mirrors the five-step flow of the original Python implementation:
-/// find address -> find account -> guest token -> summary -> calendar.
-/// The base URL is injectable so tests can point it at a mock server.
+/// Drives the flow find address -> find account -> guest token -> summary ->
+/// calendar. The base URL is injectable so tests can point it at a mock server.
 pub struct CollectionCalendarClient {
     http: reqwest::Client,
     base_url: String,
@@ -204,10 +203,8 @@ async fn parse<T: for<'de> Deserialize<'de>>(
     resp: reqwest::Response,
     request_name: &'static str,
 ) -> Result<T, CalendarError> {
-    // The API advertises JSON but the exact content-type is not relied upon;
-    // deserialize from the response body directly.
     let bytes = resp.bytes().await?;
-    serde_json::from_slice(&bytes).map_err(|_| CalendarError::MissingField(request_name))
+    serde_json::from_slice(&bytes).map_err(|_| CalendarError::Deserialize(request_name))
 }
 
 /// A service point id paired with its human description.

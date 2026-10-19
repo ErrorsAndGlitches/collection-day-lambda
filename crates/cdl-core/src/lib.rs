@@ -19,8 +19,7 @@ pub use error::CalendarError;
 pub use notifications::{Notification, SnsNotification, StdoutNotification};
 
 /// Fetches the next collection for `address` and delivers it through
-/// `notification`. This is the single entrypoint shared by the CLI and the
-/// Lambda handler, equivalent to the original `send_collection_day_notification`.
+/// `notification`. The single entrypoint shared by the CLI and Lambda handler.
 pub async fn send_collection_day_notification(
     client: &CollectionCalendarClient,
     notification: &dyn Notification,

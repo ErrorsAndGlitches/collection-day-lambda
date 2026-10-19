@@ -1,14 +1,13 @@
-//! Integration test for the full five-request calendar flow, mocked with
-//! `wiremock` and driven by the same JSON fixtures the Python tests used.
-//! Asserts the exact output strings the original implementation produced.
+//! Integration test for the full calendar flow, mocked with `wiremock` and
+//! driven by the JSON fixtures in the repository-root `tests/` directory.
 
 use cdl_core::{next_collection_msg, CollectionCalendarClient};
 use chrono::NaiveDate;
 use wiremock::matchers::{method, path};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
-/// Fixtures live in the repository-root `tests/` directory (shared with the
-/// retired Python suite). `CARGO_MANIFEST_DIR` is `crates/cdl-core`.
+/// Fixtures live in the repository-root `tests/` directory;
+/// `CARGO_MANIFEST_DIR` is `crates/cdl-core`.
 fn fixture(name: &str) -> String {
     let path = format!("{}/../../tests/{}", env!("CARGO_MANIFEST_DIR"), name);
     std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("reading {path}: {e}"))

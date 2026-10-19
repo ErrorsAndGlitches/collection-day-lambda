@@ -1,9 +1,8 @@
 //! Lambda entrypoint binary, named `bootstrap` so the `provided.al2023` base
 //! image can exec it directly.
 //!
-//! Runs as an AWS Lambda handler by default. When invoked with CLI arguments
-//! (detected via the `--address` flag) it runs locally instead, mirroring the
-//! original Python `__main__`/handler split.
+//! Runs as an AWS Lambda handler by default, or as a local CLI when invoked
+//! with the `--address` flag.
 
 use cdl_core::{
     send_collection_day_notification, CalendarError, CollectionCalendarClient, Notification,
@@ -16,8 +15,7 @@ use serde_json::{json, Value};
 
 mod cli;
 
-/// "Today" in the collection service's local timezone, matching the original
-/// `America/Los_Angeles` behaviour.
+/// "Today" in the collection service's `America/Los_Angeles` timezone.
 fn today_pacific() -> NaiveDate {
     chrono::Utc::now().with_timezone(&Los_Angeles).date_naive()
 }

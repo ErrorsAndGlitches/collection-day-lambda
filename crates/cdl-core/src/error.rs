@@ -9,6 +9,9 @@ pub enum CalendarError {
     #[error("unexpected response for {request}: status {status}")]
     BadStatus { request: &'static str, status: u16 },
 
+    #[error("could not deserialize the {0} response")]
+    Deserialize(&'static str),
+
     #[error("missing or malformed field `{0}` in response")]
     MissingField(&'static str),
 
