@@ -1,28 +1,25 @@
-from continuumio/miniconda3:23.5.2-0
+# Build the Rust Lambda as a container image for the AWS Lambda custom runtime.
+#
+# Built for arm64 (Lambda `architecture: arm64`). CodeBuild must run this on an
+# ARM compute image so the compile targets aarch64 natively — no emulation.
 
-ENV project_name collection-day-lambda
+# ---- build stage ----
+FROM public.ecr.aws/docker/library/rust:1-bookworm AS build
 
-# Set up environment and dependencies
-RUN apt-get update --fix-missing && \
-  apt-get install -y build-essential autoconf libtool zip
+WORKDIR /app
 
-COPY environment-docker.yml .
-RUN conda env create -f environment-docker.yml
+# Cache dependencies: copy manifests first, then the real sources.
+COPY Cargo.toml Cargo.lock ./
+COPY crates/cdl-core/Cargo.toml crates/cdl-core/Cargo.toml
+COPY crates/cdl-lambda/Cargo.toml crates/cdl-lambda/Cargo.toml
+COPY crates crates
 
-# Copy workspace
-WORKDIR /opt/${project_name}/
+RUN cargo build --release --bin bootstrap
 
-COPY cdl cdl
-COPY tests tests
-COPY setup.py setup.cfg /opt/${project_name}/
+# ---- runtime stage ----
+FROM public.ecr.aws/lambda/provided:al2023
 
-# Run tests
-RUN /bin/bash -c "source activate ${project_name} && python setup.py test"
+# The provided runtime execs ${LAMBDA_RUNTIME_DIR}/bootstrap.
+COPY --from=build /app/target/release/bootstrap ${LAMBDA_RUNTIME_DIR}/bootstrap
 
-# Create the AWS Lambda archive
-ENV zip_output_file /opt/lambda-archive-collection-day-lambda.zip
-
-RUN cd /opt/conda/envs/${project_name}/lib/python3.11/site-packages/ && \
-  zip -r ${zip_output_file} . -x '*__pycache__*' && \
-  cd /opt/${project_name}/ && \
-  zip -gr ${zip_output_file} cdl -x '*__pycache__*'
+CMD [ "bootstrap" ]

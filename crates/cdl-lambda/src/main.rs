@@ -1,24 +1,59 @@
-//! Lambda entrypoint binary.
+//! Lambda entrypoint binary, named `bootstrap` so the `provided.al2023` base
+//! image can exec it directly.
 //!
-//! The binary is named `bootstrap` (see Cargo.toml `[[bin]]`) so the
-//! `provided.al2023` Lambda base image can exec it directly.
-//!
-//! Phase 1 placeholder — the `lambda_runtime` handler, notifications, and CLI
-//! land in Phase 2. For now this exercises the core client end-to-end when run
-//! directly with an address argument.
+//! Runs as an AWS Lambda handler by default. When invoked with CLI arguments
+//! (detected via the `--address` flag) it runs locally instead, mirroring the
+//! original Python `__main__`/handler split.
 
-use cdl_core::{next_collection_msg, CollectionCalendarClient};
+use cdl_core::{
+    send_collection_day_notification, CalendarError, CollectionCalendarClient, Notification,
+    SnsNotification,
+};
+use chrono::NaiveDate;
+use chrono_tz::America::Los_Angeles;
+use lambda_runtime::{service_fn, Error, LambdaEvent};
+use serde_json::{json, Value};
+
+mod cli;
+
+/// "Today" in the collection service's local timezone, matching the original
+/// `America/Los_Angeles` behaviour.
+fn today_pacific() -> NaiveDate {
+    chrono::Utc::now().with_timezone(&Los_Angeles).date_naive()
+}
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let address = std::env::args()
-        .nth(1)
-        .ok_or("usage: bootstrap <address>")?;
-    let today = chrono::Local::now().date_naive();
+async fn main() -> Result<(), Error> {
+    if std::env::args().any(|a| a == "--address") {
+        return cli::run().await;
+    }
+    lambda_runtime::run(service_fn(handler)).await
+}
 
-    let calendars = CollectionCalendarClient::new()
-        .service_calendars(&address)
-        .await?;
-    println!("{}", next_collection_msg(&calendars, today)?);
-    Ok(())
+/// Lambda handler: reads `ADDRESS` and `PHONE_NUMBERS` from the environment,
+/// sends the SMS, and returns a success payload.
+async fn handler(_event: LambdaEvent<Value>) -> Result<Value, Error> {
+    let address = std::env::var("ADDRESS").map_err(|_| "ADDRESS env var is required")?;
+    let phone_numbers: Vec<String> = std::env::var("PHONE_NUMBERS")
+        .map_err(|_| "PHONE_NUMBERS env var is required")?
+        .split(',')
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty())
+        .collect();
+
+    let config = aws_config::load_defaults(aws_config::BehaviorVersion::latest()).await;
+    let sns = aws_sdk_sns::Client::new(&config);
+    let notification = SnsNotification::new(sns, phone_numbers);
+
+    run_notification(&notification, &address).await?;
+    Ok(json!({ "result": "success" }))
+}
+
+/// Shared send path used by both the handler and the CLI.
+pub(crate) async fn run_notification(
+    notification: &dyn Notification,
+    address: &str,
+) -> Result<(), CalendarError> {
+    let client = CollectionCalendarClient::new();
+    send_collection_day_notification(&client, notification, address, today_pacific()).await
 }

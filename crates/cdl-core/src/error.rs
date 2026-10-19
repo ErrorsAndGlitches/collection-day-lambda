@@ -20,4 +20,7 @@ pub enum CalendarError {
 
     #[error("no pickup date on or after {0}")]
     NoUpcomingPickup(chrono::NaiveDate),
+
+    #[error("failed to send notification: {0}")]
+    Notification(String),
 }
