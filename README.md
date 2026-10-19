@@ -1,86 +1,63 @@
-## Collection Day Lambda
+# Collection Day Lambda
 
-This project provides users with a reminder the day before their collection day as well as providing information on
-which type of collection will occur e.g. regular trash, compost, or recycling etc. This project uses AWS Lambda to
-make a request to the [King County Collection Day Tool][].
- 
-The Lambda function is configured to run on a specific day at a specific time that the user configures for the
-notification to be sent. This is to reduce the number of calls to the King County website as well as a cost saving
-mechanism.
+Sends a reminder the day before a Seattle solid-waste collection, including
+which services are collected (garbage, recycling, food/yard waste). An AWS
+Lambda queries the [Seattle Public Utilities collection calendar][spu] on a
+schedule and sends the reminder by SMS.
 
-[King County Collection Day Tool]: https://www.seattle.gov/utilities/services/garbage/look-up-collection-day
+[spu]: https://www.seattle.gov/utilities/services/garbage/look-up-collection-day
 
+## Layout
 
-## Running Tests
+A Cargo workspace with two crates:
 
-```
-python -m unittest
-```
+- `crates/cdl-core` — the calendar client (the requests to the utilities API,
+  response parsing, and next-pickup message formatting) and the notification
+  sinks (SNS and stdout).
+- `crates/cdl-lambda` — the `bootstrap` binary. Runs as the Lambda handler by
+  default, or as a local CLI when invoked with `--address`.
 
-
-## Running Locally
-
-One can run the tool from the command line for testing by running:
-```bash
-python -m cdl [options...]
-```
-
-
-## Running on AWS
-
-### Building the Lamba Tarball
-
-AWS Lambda functions run on Amazon Linux. Hence, if there are any dependencies that are natively compiled e.g. **pyjq**,
-then if you are installing these dependencies on a Mac and including them in the AWS Lamba Tarball, they will not work.
-To create a consistent tarball, we have opted to use Docker, which will create a standard build environment. The
-Dockerfile in this project builds the zip file in the image. The zip file then needs to be copied to the local host for
-uploading to AWS Lambda. In the future, this will be automated and part of a **setup.py** command.
+## Build and test
 
 ```bash
-# build the Docker image
-docker build -t collection-day-lambda:latest .
-# create a container
-container_id=$(docker create collection-day-lambda:latest)
-# copy the AWS Lambda Tarball from the image
-docker cp ${container_id}:/opt/lambda-archive-collection-day-lambda.zip .
-# delete the container
-docker rm ${container_id}
+cargo build
+cargo test
 ```
 
-### Configuring the Lambda Function
+The integration test in `crates/cdl-core/tests` replays the JSON fixtures in
+`tests/` through a mock HTTP server, so the full flow is exercised offline.
 
-Environment variables that must be defined in the Lambda context:
-
-* **ADDRESS**: address to look up the collection for. Only needs to be the street address i.e. no city or zip code.
-* **PHONE_NUMBERS**: comma separated list of phone numbers to send the messages to. Must have the form "+10123456789"
-
-The Lambda needs permissions to hit SNS to send the SMS messages. The role the Lambda runs under must have these
-permissions.
-
-After creating the AWS Lambda function, configure it and upload the tarball via the following:
+## Run locally
 
 ```bash
-# update the function configuration
-aws lambda update-function-configuration \
-  --function-name 'collection-day-lambda' \
-  --handler cdl.cdl.collection_day_lambda_handler \
-  --environment Variables='{ADDRESS=987 Made Up Address St,PHONE_NUMBERS="+12223334444,+15556667777"}' \
-  --runtime 'python3.11' \
-  --timeout 60
-# upload the build Lambda tarball
-aws lambda update-function-code \
-  --function-name 'collection-day-lambda' \
-  --zip-file fileb://lambda-archive-collection-day-lambda.zip
+# Print the next pickup without sending anything.
+cargo run --bin bootstrap -- --address "987 Example St" --print
+
+# Send via SNS using a named AWS profile.
+cargo run --bin bootstrap -- \
+  --address "987 Example St" \
+  --phone-numbers "+12223334444" "+15556667777" \
+  --aws-profile my-profile
 ```
 
-As a final step, you can use CloudWatch to generate events to trigger the Lambda at a weekly interval.
+## Container image
 
+The Lambda is packaged as an arm64 container image on the `provided.al2023`
+base. The image is built and pushed to ECR by CI, not by hand:
 
-## Design Overview
+```bash
+docker build -t collection-day-lambda .
+```
 
-> todo
+`buildspec.yml` defines the CodeBuild build that produces the image and pushes
+it to ECR tagged with the commit SHA.
 
+## Deployment
 
-## Development
+Infrastructure and deployment live in the separate
+[collection-day-lambda-cdk][cdk] repository, a self-mutating CDK pipeline that
+builds the image, deploys the function from ECR, grants it SNS publish
+permission, and schedules it with EventBridge. The function's `ADDRESS` and
+`PHONE_NUMBERS` are set there.
 
-> todo
+[cdk]: https://github.com/ErrorsAndGlitches/collection-day-lambda-cdk
