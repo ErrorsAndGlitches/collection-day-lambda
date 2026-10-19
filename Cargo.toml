@@ -1,0 +1,15 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/cdl-core",
+    "crates/cdl-lambda",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/ErrorsAndGlitches/collection-day-lambda"
+
+[workspace.dependencies]
+cdl-core = { path = "crates/cdl-core" }
